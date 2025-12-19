@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verisoul x LVPT | The Strategic Edge</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --verisoul-black: #0a0a0a;
+            --verisoul-dark-grey: #121212;
+            --verisoul-blue: #2160FD; 
+            --vegas-gold: #d4af37;
+            --text-white: #ffffff;
+            --text-grey: #b0b0b0;
+            --card-bg: rgba(33, 96, 253, 0.03);
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--verisoul-black);
+            color: var(--text-white);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* --- UTILITIES & ANIMATIONS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--text-white), var(--verisoul-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .blue-text { color: var(--verisoul-blue); }
+        .gold-text { color: var(--vegas-gold); }
+
+        .quote-box {
+            border-left: 3px solid var(--vegas-gold);
+            padding-left: 20px;
+            margin: 40px 0;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--text-white);
+        }
+
+        /* --- HEADER (Bluish White) --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            /* Bluish White Background */
+            background: rgba(240, 248, 255, 0.95); 
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(33, 96, 253, 0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .logos { display: flex; align-items: center; gap: 30px; }
+        
+        /* Updated Logo Sizing */
+        .logo-verisoul { 
+            height: 35px; /* Verisoul is wide, so shorter height balances it */
+            width: auto; 
+            display: block;
+        }
+        
+        .logo-lvpt {
+            height: 65px; /* LVPT is square, needs to be taller to match visual weight */
+            width: auto;
+            display: block;
+        }
+        
+        .divider { height: 40px; width: 1px; background: #000; opacity: 0.1; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://storage.googleapis.com/msgsndr/E2BEbKIK8SvsJICq4vXY/media/6944a4cec8b4b20eaf562ccf.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.6; /* Lightened up so image is more visible */
+            transform: scale(1.1);
+            z-index: -1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            /* Lighter overlay gradient */
+            background: radial-gradient(circle at center, transparent 20%, var(--verisoul-black) 95%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+
+        /* Hero Pre-title with White Stroke */
+        .pre-title {
+            color: var(--verisoul-blue);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            -webkit-text-stroke: 0.5px white; /* Adds the white border */
+            text-shadow: 0 0 15px rgba(33, 96, 253, 0.5);
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            line-height: 1.1;
+            margin-bottom: 30px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #dcdcdc; /* Lighter text for contrast against lighter bg */
+            max-width: 650px;
+            margin: 0 auto 40px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+        }
+
+        /* Rounded Buttons */
+        .btn-primary {
+            padding: 16px 42px;
+            background: var(--verisoul-blue);
+            border: none;
+            color: #fff;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-block;
+            box-shadow: 0 4px 20px rgba(33, 96, 253, 0.3);
+            border-radius: 50px; /* Rounded Corners */
+        }
+
+        .btn-primary:hover {
+            background: #1a4cdb;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(33, 96, 253, 0.5);
+        }
+
+        /* --- SECTION STYLES --- */
+        .section-padding { padding: 100px 5%; }
+        
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-header h2 { font-size: 3rem; margin-bottom: 10px; }
+
+        /* --- THE FORMATS (Level Up) --- */
+        .formats-section {
+            background: linear-gradient(to bottom, var(--verisoul-black), var(--verisoul-dark-grey));
+        }
+        
+        .cards-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            perspective: 1000px;
+        }
+
+        .format-card {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+            background: rgba(255,255,255,0.02);
+            padding: 50px 40px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .format-card::top {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: var(--verisoul-blue);
+        }
+
+        .format-card h3 { font-size: 1.8rem; margin-bottom: 15px; color: var(--text-white); }
+        .format-card p { color: var(--text-grey); margin-bottom: 25px; font-size: 0.95rem; }
+        
+        .opt-tag {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 5px 12px;
+            background: var(--vegas-gold);
+            color: #000;
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- HYBRID OPTION --- */
+        .hybrid-container {
+            margin-top: 60px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hybrid-box {
+            background: linear-gradient(135deg, rgba(33, 96, 253, 0.1), rgba(0,0,0,0));
+            border: 1px solid var(--verisoul-blue);
+            padding: 40px;
+            max-width: 800px;
+            text-align: center;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .hybrid-box h3 { color: var(--verisoul-blue); font-size: 1.5rem; margin-bottom: 15px; }
+        .hybrid-box p { color: var(--text-grey); font-size: 1.1rem; }
+
+        /* --- ENGAGEMENT VISUALIZER --- */
+        .engagement-section {
+            background: #0f0f0f;
+            text-align: center;
+        }
+
+        .engagement-container {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            padding: 60px;
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 12px;
+        }
+
+        .icon-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 40px 0;
+            font-size: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .pro-group {
+            color: var(--vegas-gold);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .arrow-icon { color: var(--text-grey); font-size: 1.5rem; opacity: 0.5; }
+        
+        .guest-group {
+            display: flex;
+            gap: 10px;
+            color: var(--verisoul-blue);
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 400px;
+        }
+
+        .engagement-text h3 { margin-bottom: 10px; }
+        .ratio-text { font-family: 'Inter', monospace; color: var(--text-grey); font-size: 0.9rem; margin-top: 10px; }
+
+        /* --- LIVE ACTION GALLERY --- */
+        .live-action-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .live-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 4px;
+            transition: transform 0.4s ease;
+            filter: brightness(0.8);
+        }
+
+        .live-img:hover { transform: scale(1.02); filter: brightness(1); }
+
+        .wide-img {
+            grid-column: span 2;
+            height: 400px;
+        }
+
+        /* --- THE PROS --- */
+        .pros-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            /* KEY CHANGE: Center items even on wide screens */
+            justify-content: center;
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .pro-card {
+            background: var(--verisoul-dark-grey);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .pro-card:hover { transform: translateY(-5px); border-color: var(--vegas-gold); }
+
+        .pro-img-wrapper {
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+        }
+
+        .pro-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            transition: 0.5s;
+        }
+
+        .pro-card:hover img { transform: scale(1.05); }
+
+        .pro-info { padding: 25px; }
+        .pro-info h4 { color: var(--text-white); font-size: 1.4rem; margin-bottom: 5px; }
+        .pro-info p { font-size: 0.9rem; color: var(--vegas-gold); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- VENUES SECTION --- */
+        .venues-section {
+            background: linear-gradient(to top, var(--verisoul-black), #151515);
+        }
+
+        .venue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .venue-card {
+            position: relative;
+            height: 250px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .venue-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .venue-card:hover img { transform: scale(1.1); }
+
+        .venue-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            padding: 20px;
+            transform: translateY(0);
+        }
+
+        .venue-overlay h4 { color: #fff; font-size: 1.2rem; margin-bottom: 5px; }
+        .venue-overlay p { color: var(--text-grey); font-size: 0.9rem; }
+
+        /* --- ENHANCEMENTS --- */
+        .enhancements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .enhance-card {
+            background: rgba(255,255,255,0.03);
+            padding: 30px;
+            border-top: 2px solid var(--text-grey);
+            transition: 0.3s;
+        }
+
+        .enhance-card:hover {
+            background: rgba(33, 96, 253, 0.05);
+            border-top: 2px solid var(--verisoul-blue);
+        }
+
+        .enhance-card h4 { color: var(--text-white); margin-bottom: 15px; font-size: 1.1rem; }
+        .enhance-card ul li {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--text-grey);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .enhance-card ul li::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: var(--verisoul-blue);
+            border-radius: 50%;
+        }
+
+        /* --- LOGISTICS & FOOTER --- */
+        .logistics-bar {
+            background: var(--verisoul-dark-grey);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+
+        .logistics-flex {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 60px;
+            text-align: center;
+        }
+
+        .log-item h4 { font-family: 'Inter', sans-serif; color: var(--verisoul-blue); text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; margin-bottom: 5px; }
+        .log-item p { font-size: 1.1rem; color: #fff; }
+
+        footer {
+            background: #050505;
+            padding: 80px 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .contact-info {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            color: var(--text-grey);
+        }
+        
+        .contact-info a { color: var(--text-white); transition: 0.3s; }
+        .contact-info a:hover { color: var(--verisoul-blue); }
+
+        @media (max-width: 768px) {
+            .intro-grid { grid-template-columns: 1fr; gap: 40px; }
+            .hero h1 { font-size: 2.8rem; }
+            .live-action-grid { grid-template-columns: 1fr; }
+            .wide-img { grid-column: span 1; }
+            .icon-row { gap: 10px; }
+            .logos { gap: 15px; }
+            .logo-lvpt { height: 50px; }
+            .logo-verisoul { height: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logos">
+            <img src="https://cdn.prod.website-files.com/6627605478f226ce86d5c27f/668561f10de60c0ae2ec075a_Full-logo-main.svg" alt="Verisoul" class="logo-verisoul">
+            <div class="divider"></div>
+            <img src="https://storage.googleapis.com/msgsndr/E2BEbKIK8SvsJICq4vXY/media/688b94d7fc4ae33b5ab65b48.png" alt="LVPT" class="logo-lvpt">
+        </div>
+        <a href="mailto:book@pokertraininglasvegas.com" class="btn-primary" style="padding: 10px 25px; font-size: 0.8rem;">Contact Matt</a>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content reveal">
+            <div class="pre-title">Exclusive Executive Event</div>
+            <h1>The Boardroom <br>Meets <span class="gradient-text">Vegas</span></h1>
+            <p>Sleek. Modern. Exciting.<br>A high-stakes poker training experience designed for Verisoul.</p>
+            <a href="#formats" class="btn-primary">View Experiences</a>
+        </div>
+    </header>
+
+    <section class="section-padding">
+        <div class="intro-grid">
+            <div class="intro-text reveal">
+                <div class="pre-title">The Concept</div>
+                <h2>Detecting Bluffs.<br>Calculating Risk.<br><span class="blue-text">Restoring Trust.</span></h2>
+                <div class="quote-box">
+                    "Over decades of trial and error we have assembled the greatest poker instructors and players in the world, hands down!"
+                </div>
+                <p>Verisoul is built on outsmarting bad actors and making bold, data-informed decisions. Poker is the ultimate playground to sharpen those exact skills. Whether it’s spotting a fake account or reading a bluff at the felt, the mechanics are identical: <strong>making the best possible decision with incomplete information.</strong></p>
+            </div>
+            
+            <div class="live-gallery reveal">
+                <div class="live-action-grid">
+                    <img src="https://storage.googleapis.com/msgsndr/E2BEbKIK8SvsJICq4vXY/media/679d3db2aedcfa2008ed45ef.jpeg" class="live-img" alt="Jeff Restaurant Training">
+                    <img src="https://storage.googleapis.com/msgsndr/E2BEbKIK8SvsJICq4vXY/media/69329adbe0f092644fb65b71.jpg" class="live-img" alt="Kenna Grammy Event">
+                    <img src="https://storage.googleapis.com/msgsndr/E2BEbKIK8SvsJICq4vXY/media/69329429e0f0927468b5af13.jpg" class="live-img wide-img" alt="Happy Hour Training">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="formats" class="section-padding formats-section">
+        <div class="section-header reveal">
+            <div class="pre-title">Custom Experiences</div>
+            <h2>2 Ways to Level Up</h2>
+            <p style="color: var(--text-grey);">Interactive instruction tailored to your goals.</p>
+        </div>
+
+        <div class="cards-container">
+            <div class="format-card js-tilt reveal">
+                <div style="font-size: 2.5rem; margin-bottom: 20px; color: var(--verisoul-blue);"><i class="fa-solid fa-crosshairs"></i></div>
+                <h3>Hand Analysis</h3>
+                <p><strong>What is Hand Analysis?</strong></p>
+                <p>Imagine Tiger Woods watching your back-swing in real time and adjusting exactly what you are doing right and wrong.</p>
+                <p>Our pros will confidently break down what all players are doing & if it is the most optimal play or if there was a better option. This is real-time feedback designed to sharpen analytical thinking.</p>
+                <span class="opt-tag">Optional Tournament</span>
+            </div>
+
+            <div class="format-card js-tilt reveal">
+                <div style="font-size: 2.5rem; margin-bottom: 20px; color: var(--vegas-gold);"><i class="fa-solid fa-user-secret"></i></div>
+                <h3>The "Bad Actor" Seminar</h3>
+                <p><strong>"Finding the Bad Actors"</strong></p>
+                <p>A classroom-style interactive seminar focused on psychology, tells, and body language analysis. We teach your team how to spot deception, read non-verbal cues, and protect their stack.</p>
+                <p>These skills are ideal for both the boardroom and the poker table—perfect for a team dedicated to stopping fraud.</p>
+                <span class="opt-tag">Optional Tournament</span>
+            </div>
+        </div>
+
+        <div class="hybrid-container reveal">
+            <div class="hybrid-box">
+                <h3><i class="fa-solid fa-layer-group"></i> The Hybrid Protocol</h3>
+                <p><strong>Bring both styles together.</strong> Can't decide? We can combine the psychological depth of the Bad Actor seminar with the real-time thrill of Hand Analysis. Start with a seminar on spotting deception, then move to the tables to put those skills to the test in a coached tournament. The ultimate comprehensive experience.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding engagement-section">
+        <div class="engagement-container reveal">
+            <div class="engagement-text">
+                <h3>Instruction Designed for Maximum Engagement</h3>
+                <p style="color: var(--text-grey);">We ensure every guest gets 1-on-1 time with a world-class pro.</p>
+            </div>
+
+            <div class="icon-row">
+                <div class="pro-group">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span style="font-size: 0.8rem; margin-top: 5px;">1 Pro</span>
+                </div>
+                <div class="arrow-icon"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="guest-group">
+                    <i class="fa-solid fa-user"></i><i class="fa-solid fa-user"></i><i class="fa-solid fa-user"></i>
+                    <i class="fa-solid fa-user"></i><i class="fa-solid fa-user"></i><i class="fa-solid fa-user"></i>
+                    <i class="fa-solid fa-user"></i><i class="fa-solid fa-user"></i><i class="fa-solid fa-user"></i>
+                </div>
+            </div>
+            
+            <p style="font-size: 1.2rem; font-weight: 600;">1 Professional Instructor per 9 Guests</p>
+            <p class="ratio-text">Example: 15 guests = 2 Pros (8/7 split)</p>
+            <p class="ratio-text" style="color: var(--vegas-gold); margin-top: 15px;">2-HOUR MINIMUM FOR ALL EXPERIENCES</p>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="section-header reveal">
+            <h2>Train With Legends</h2>
+            <p style="color: var(--text-grey);">Some of our Pros</p>
+        </div>
+        <div class="pros-grid reveal">
+            <div class="pro-card">
+                <div class="pro-img-wrapper">
+                    <img src="https://www.seminolehardrockpokeropen.com/wp-content/uploads/2022/01/2022-LHPO-Jeff-Madsen.jpg" alt="Jeff Madsen">
+                </div>
+                <div class="pro-info">
+                    <h4>Jeff Madsen</h4>
+                    <p>4x WSOP Bracelet Winner</p>
+                </div>
+            </div>
+            <div class="pro-card">
+                <div class="pro-img-wrapper">
+                    <img src="https://www.gamblinginsider.com/img/news/kenna-james-ape-in-poker-partnership.jpg" alt="Kenna James">
+                </div>
+                <div class="pro-info">
+                    <h4>Kenna James</h4>
+                    <p>Legendary Strategist</p>
+                </div>
+            </div>
+            <div class="pro-card">
+                <div class="pro-img-wrapper">
+                    <img src="https://ggpokernews.com/wp-content/uploads/2021/12/Taylor-Black-WPT.jpg" alt="Taylor Black">
+                </div>
+                <div class="pro-info">
+                    <h4>Taylor Black</h4>
+                    <p>WPT Champion</p>
+                </div>
+            </div>
+            <div class="pro-card">
+                <div class="pro-img-wrapper">
+                    <img src="https://live.staticflickr.com/65535/54204455594_59a1b5201c_k.jpg" alt="Nick Pupillo">
+                </div>
+                <div class="pro-info">
+                    <h4>Nick Pupillo</h4>
+                    <p>WSOP Circuit Ring Leader</p>
+                </div>
+            </div>
+            <div class="pro-card">
+                <div class="pro-img-wrapper">
+                    <img src="https://media.poker.org/prod/images/article_large/ebd9cdc31005-jonah-lablanche.webp" alt="Jonah Lebranche">
+                </div>
+                <div class="pro-info">
+                    <h4>Jonah Lebranche</h4>
+                    <p>High Stakes Pro</p>
+                </div>
+            </div>
+            <div class="pro-card">
+                <div class="pro-img-wrapper">
+                    <img src="https://storage.googleapis.com/msgsndr/E2BEbKIK8SvsJICq4vXY/media/69333e1c0439b81fb3f50bd5.jpg" alt="Ryan Laplante">
+                </div>
+                <div class="pro-info">
+                    <h4>Ryan Laplante</h4>
+                    <p>WSOP Bracelet Winner</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="venues" class="section-padding venues-section">
+        <div class="section-header reveal">
+            <div class="pre-title">Location Options</div>
+            <h2>Need a Venue?</h2>
+            <p style="color: var(--text-grey);">A few of our location options. Perfect for 10-15 clients.</p>
+        </div>
+        <div class="venue-grid reveal">
+            <div class="venue-card">
+                <img src="https://www.venetianlasvegas.com/adobe/dynamicmedia/deliver/dm-aid--21e02a60-ee72-4547-8b2b-7f9d554ebf47/poker-room-2-2000x812.jpg?preferwebp=true&width=1920&quality=64" alt="Venetian">
+                <div class="venue-overlay">
+                    <h4>Venetian Poker Room</h4>
+                    <p>Classic Vegas luxury.</p>
+                </div>
+            </div>
+            <div class="venue-card">
+                <img src="https://tocamadera.com/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fkq13uftm%2Fproduction%2F116241e3d0a5bb86f6c2c729e6dd1825b84b6bde-1920x1320.png&w=1920&q=75" alt="Toca Madera">
+                <div class="venue-overlay">
+                    <h4>Toca Madera</h4>
+                    <p>High-end dining atmosphere.</p>
+                </div>
+            </div>
+            <div class="venue-card">
+                <img src="https://static.wixstatic.com/media/bb705a_4022f1db8aaa4e06a68bc4ec3f657af2~mv2.jpg/v1/fill/w_472,h_640,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Barrels%20in%20Front%20of%20Stills.jpg" alt="Distillery">
+                <div class="venue-overlay">
+                    <h4>Las Vegas Distillery</h4>
+                    <p>Private venue with premium spirits.</p>
+                </div>
+            </div>
+            <div class="venue-card">
+                <img src="https://themobmuseum.org/wp-content/uploads/2021/02/TheMobMuseum_PrivateEvent_Distillery-1-1024x683-1.jpg" alt="Mob Museum">
+                <div class="venue-overlay">
+                    <h4>Mob Museum Underground</h4>
+                    <p>Historic and experiential.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" style="background: #0f0f0f;">
+        <div class="section-header reveal">
+            <h2>Optional Enhancements</h2>
+            <p style="color: var(--text-grey);">Fully customizable to elevate the event.</p>
+        </div>
+        
+        <div class="enhancements-grid reveal">
+            <div class="enhance-card">
+                <h4 class="blue-text"><i class="fa-solid fa-graduation-cap"></i> Instructional</h4>
+                <ul>
+                    <li>Strategy mini-tournaments</li>
+                    <li>Team competitions</li>
+                    <li>Deep Game Theory modules</li>
+                    <li>Psychology & tells training</li>
+                </ul>
+            </div>
+
+            <div class="enhance-card">
+                <h4 class="gold-text"><i class="fa-solid fa-gem"></i> Branding</h4>
+                <ul>
+                    <li>Cahill-branded poker felts</li>
+                    <li>Custom poker chips</li>
+                    <li>Premium branded playing cards</li>
+                    <li>Digital Cahill logo display</li>
+                </ul>
+            </div>
+
+            <div class="enhance-card">
+                <h4 class="blue-text"><i class="fa-solid fa-martini-glass"></i> Food & Beverage</h4>
+                <ul>
+                    <li>Whiskey or spirits tasting</li>
+                    <li>Premium open bar</li>
+                    <li>Full dinner integration</li>
+                    <li>Custom cocktails (The High Yield Highball)</li>
+                </ul>
+            </div>
+
+            <div class="enhance-card">
+                <h4 class="gold-text"><i class="fa-solid fa-van-shuttle"></i> Concierge</h4>
+                <ul>
+                    <li>Luxury SUVs, Sprinters</li>
+                    <li>After-event transport</li>
+                    <li>Nightclub access</li>
+                    <li>Show tickets & reservations</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="logistics-bar reveal">
+        <div class="logistics-flex">
+            <div class="log-item">
+                <h4>Duration</h4>
+                <p>2 Hour Minimum</p>
+            </div>
+            <div class="log-item">
+                <h4>Location</h4>
+                <p>We Come To You</p>
+            </div>
+            <div class="log-item">
+                <h4>Date</h4>
+                <p>Monday, Jan 12, 2026</p>
+            </div>
+            <div class="log-item">
+                <h4>Customer Experiences Starting at</h4>
+                <p>$5,500 - $6,500</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="reveal">
+            <img src="https://storage.googleapis.com/msgsndr/E2BEbKIK8SvsJICq4vXY/media/688b94d7fc4ae33b5ab65b48.png" alt="LVPT" style="height: 50px; margin-bottom: 20px;">
+            <h3>Las Vegas Poker Training</h3>
+            
+            <div class="contact-info">
+                <p style="font-weight: 700; font-size: 1.1rem; color: #fff;">Matt Carpenter</p>
+                <a href="tel:6167457148">(616) 745-7148</a>
+                <a href="mailto:book@pokertraininglasvegas.com">book@pokertraininglasvegas.com</a>
+                <a href="https://pokertraininglasvegas.com" target="_blank">Pokertraininglasvegas.com</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 1. SCROLL REVEAL ANIMATION
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // 2. PARALLAX EFFECT
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroBg = document.querySelector('.hero-bg');
+            if(heroBg) {
+                heroBg.style.transform = `translateY(${scrolled * 0.5}px) scale(1.1)`;
+            }
+        });
+
+        // 3. 3D TILT EFFECT
+        const cards = document.querySelectorAll('.js-tilt');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -5;
+                const rotateY = ((x - centerX) / centerX) * 5;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
+            });
+        });
+    </script>
+</body>
+</html>
